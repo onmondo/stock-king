@@ -1,0 +1,16 @@
+section#ledger {
+    display: grid;
+    
+}
+
+section#ledger table.ordertxn {
+    border-collapse: collapse;
+}
+
+section#ledger tr.ordertxntitle > th {
+    background-color: var(--base-bg-color);
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 1rem 0.6rem;
+    
+}

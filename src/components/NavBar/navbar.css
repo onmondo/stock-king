@@ -1,0 +1,17 @@
+nav {
+    /* border-style: solid; */
+    border-bottom: 0.1rem;
+    border-bottom-style: solid;
+    border-bottom-color: var(--base-border-color);
+    /* border-width: 0.2rem; */
+}
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+nav ul li a {
+    color: var(--base-font-color);
+    font-size: 0.8rem;
+}
