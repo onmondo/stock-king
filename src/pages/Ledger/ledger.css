@@ -12,5 +12,36 @@ section#ledger tr.ordertxntitle > th {
     font-size: 0.8rem;
     font-weight: 600;
     padding: 1rem 0.6rem;
-    
+}
+
+section#ledger tr#newentry > td > form {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+}
+section#ledger tr#newentry > td > form > p {
+    margin: 1rem;
+}
+
+section#ledger tr#newentry > td > form label {
+    font-size: 0.6rem;
+}
+
+section#ledger tr#newentry > td > form button {
+    padding: 0.4rem 1rem;
+}
+
+section#ledger tr#newentry > td > form input, select {
+    padding: 0.4rem 0.2rem;
+    border-radius: 0.6rem;
+    border-width: 0.1rem;
+}
+
+section#ledger tr#newentry > td > form input.amount {
+    text-align: right;
+    width: 5rem;
+}
+
+section#ledger tr#newentry > td > form input#targetmet {
+    height: 1.4rem;
 }
