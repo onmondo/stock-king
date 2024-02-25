@@ -8,21 +8,16 @@ import axios from "axios";
 export function Ledger() {
     const defaultNewOrder = {
         userUuid: 'cb968471-6c42-4e4f-aab6-2108488d55ae',
-        dateTransaction: '',
+        transactionDate: '',
         type: 'BUY',
         ticker: '',
         shares: 0,
         cost: 0,
-        grossAmount: 0,
-        netAmount: 0,
-        gainsOrLoss: 0,
-        targetEarnings: 0,
-        // targetTotalAmount: 0,
-        isTargetMet: false,
     };
 
     const [orders, setOrders] = useState<IOrderTransaction[]>([]);
     const [newOrder, setNewOrder] = useState<INewOrderTransaction>(defaultNewOrder);
+    const [message, setMessage] = useState("");
 
     const fetchOrders = async () => {
         const apiUrl = `${process.env.LOCAL_STOCK_KING_API}/orders`;
@@ -46,12 +41,19 @@ export function Ledger() {
     const postNewOrder = async () => {
         const apiUrl = `${process.env.LOCAL_STOCK_KING_API}/orders`;
         console.log("newOrder", newOrder);
-        await axios.post(apiUrl, newOrder, {
-            headers: {
-                Accept: 'application/json',
-                'Content-Type': 'application/json',
-            }
-        })
+        try {
+            await axios.post(apiUrl, newOrder, {
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                }
+            })
+            setMessage("Successfully created a new order!");
+        } catch (error) {
+            const errorDetails = error as Error;
+            setMessage(`Create order failed... [${errorDetails.message}]`)
+        }
+
     }
 
     const handleAddNewEntry = async (event: any) => {
@@ -65,6 +67,7 @@ export function Ledger() {
         <section id="ledger">
             <header>
                 <h1>Ledger</h1>
+                { (message) ? <p>{message}</p> : <></> }
             </header>
 
             <table className="ordertxn">
@@ -77,7 +80,6 @@ export function Ledger() {
                         <th>Cost/Price</th>
                         <th>Gross Amount</th>
                         <th>Net Amount</th>
-                        <th>Gains/Loss</th>
                         <th>Target Earnings</th>
                         <th>Total Target Amount</th>
                         <th>Target Met?</th>
@@ -93,7 +95,7 @@ export function Ledger() {
                                 )
                             })
                         :
-                            <tr><td colSpan={11}><em>Empty</em></td></tr>
+                            <tr><td colSpan={10}><em>Empty</em></td></tr>
                     }
                     <NewOrderTransaction 
                         newOrder={newOrder} 

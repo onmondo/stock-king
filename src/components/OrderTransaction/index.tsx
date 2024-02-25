@@ -1,45 +1,74 @@
-import React from "react";
+import React, { useState } from "react";
 import "./rowtransaction.css";
 import { OrderStatus } from "./orderStatus"
 import { IOrderTransaction } from "../../interfaces/orders";
+import EditIcon from "../../assets/EditIcon";
+import SaveIcon from "../../assets/SaveIcon";
 
 export function OrderTransaction(props: { order: IOrderTransaction } ) {
+    const [editType, setEditType] = useState(false);
     const { order } = props;
+
+    const handleEditType = () => {
+        setEditType(!editType);
+    }
     return (
-        // <dl>
-        //     <dt>Date</dt>
-        //     <dd>{order.date}</dd>
-        //     <dt>Type</dt>
-        //     <dd>{order.type}</dd>
-        //     <dt>Ticker</dt>
-        //     <dd>{order.ticker}</dd>
-        //     <dt>Shares</dt>
-        //     <dd>{order.shares}</dd>
-        //     <dt>Cost/Price</dt>
-        //     <dd>{order.cost}</dd>
-        //     <dt>Gross Amount</dt>
-        //     <dd>{order.grossAmount}</dd>
-        //     <dt>Net Amount</dt>
-        //     <dd>{order.netAmount}</dd>
-        //     <dt>Target Earnings</dt>
-        //     <dd>{order.targetEarnings}</dd>
-        //     <dt>Total Target Amount</dt>
-        //     <dd>{order.targetTotalAmount}</dd>
-        //     <dt>Target Met?</dt>
-        //     <dd className={`orderstatus_${order.isTargetMet}`}><OrderStatus isTargetMet={order.isTargetMet} /></dd>
-        // </dl>
         <tr className="ordertxndata">
              <td>{order.transactionDate}</td>
-             <td className={`ordertype_${order.type}`}>{order.type}</td>
+             <td className={`ordertype_${order.type}`}>
+                {
+                    (editType)
+                    ?
+                    <>
+                        <select id="txntype">
+                            <option value="BUY">BUY</option>
+                            <option value="SELL">SELL</option>
+                            <option value="SELL">DIV</option>
+                        </select>
+                        &nbsp;
+                        <a 
+                            href="#"
+                            onClick={handleEditType}
+                        >
+                            <SaveIcon />
+                        </a> 
+                        
+                    </>
+                    :
+                    <>
+                        {order.type}
+                        &nbsp;
+                        <a 
+                            className="editicon" 
+                            href="#"
+                            onClick={handleEditType}
+                        >
+                            <EditIcon color="#1a8eb0" />
+                        </a>                        
+                    </>
+                }
+            </td>
              <td>{order.ticker}</td>
-             <td className="ordertxnnum">{order.shares}</td>
-             <td className="ordertxnnum">{order.cost}</td>
+             <td className="ordertxnnum">
+                {order.shares}
+                &nbsp;
+                <a className="editicon" href="#"><EditIcon color="#1a8eb0" /></a>
+            </td>
+             <td className="ordertxnnum">
+                {order.cost}
+                &nbsp;
+                <a className="editicon" href="#"><EditIcon color="#1a8eb0" /></a>
+            </td>
              <td className="ordertxnnum">{order.grossAmount}</td>
              <td className="ordertxnnum">{order.netAmount}</td>
-             <td className="ordertxnnum">{order.gainsOrLoss}</td>
-             <td className="ordertxnnum">{order.targetEarnings}</td>
-             <td className="ordertxnnum">{order.targetTotalAmount}</td>
-             <td className={`orderstatus_${order.isTargetMet}`}><OrderStatus isTargetMet={order.isTargetMet} /></td>
+             {/* <td className="ordertxnnum">
+                {order.gainsOrLoss}
+            </td> */}
+             <td className="ordertxnnum">{order.targetGains}</td>
+             <td className="ordertxnnum">{order.totalAmount}</td>
+             <td className={`orderstatus_${order.isTargetMet}`}>
+                <OrderStatus isTargetMet={order.isTargetMet} />
+            </td>
         </tr>
     )
 }

@@ -1,4 +1,3 @@
-import Big from "big.js";
 import React from "react";
 // import { INewOrderTransaction } from "../../interfaces/orders";
 
@@ -10,16 +9,9 @@ export function NewOrderTransaction({
 }: any) {
     // const [addedOrder, setAddedOrder] = useState<INewOrderTransaction>(defaultNewOrder);
 
-    const computeGrossAmount = (): number => {
-        const bShares = Big(newOrder.shares);
-        const bCost = Big(newOrder.cost || 0);
-        const bGrossAmount = bCost.times(bShares);
-        return bGrossAmount.toNumber();
-    }
-
     const handleDateChange = (event: any) =>  {
         event.preventDefault();
-        setNewOrder({...newOrder, dateTransaction: event.target.value})
+        setNewOrder({...newOrder, transactionDate: event.target.value})
     }
 
     const handleTypeChange = (event: any) => {
@@ -36,38 +28,36 @@ export function NewOrderTransaction({
     const handleSharesChange = (event: any) => {
         event.preventDefault();
         const shares = Number(event.target.value)
-        const grossAmount = computeGrossAmount()
-        setNewOrder({...newOrder, shares, grossAmount})
+        setNewOrder({...newOrder, shares})
     }
 
     const handleCostChange = (event: any) => {
         event.preventDefault();
         const cost = Number(event.target.value)
-        const grossAmount = computeGrossAmount()
-        setNewOrder({...newOrder, cost, grossAmount})
+        setNewOrder({...newOrder, cost})
     }
 
-    const handleNetAmountChange = (event: any) => {
-        event.preventDefault();
-        const bNetAmount = Big(event.target.value);
-        const bRate = Big(0.04);
-        const bTargetEarnings = bNetAmount.times(bRate)
-        const netAmount = bNetAmount.toNumber();
-        const targetEarnings = bTargetEarnings.toNumber();
-        console.log("targetEarnings", targetEarnings);
-        setNewOrder({...newOrder, netAmount, targetEarnings})
-    }
+    // const handleNetAmountChange = (event: any) => {
+    //     event.preventDefault();
+    //     const bNetAmount = Big(event.target.value);
+    //     const bRate = Big(0.04);
+    //     const bTargetEarnings = bNetAmount.times(bRate)
+    //     const netAmount = bNetAmount.toNumber();
+    //     const targetEarnings = bTargetEarnings.toNumber();
+    //     console.log("targetEarnings", targetEarnings);
+    //     setNewOrder({...newOrder, netAmount, targetEarnings})
+    // }
 
-    const handleGainLossChange = (event: any) => {
-        event.preventDefault();
-        const gainsOrLoss = Number(event.target.value)
-        setNewOrder({...newOrder, gainsOrLoss})
-    }
+    // const handleGainLossChange = (event: any) => {
+    //     event.preventDefault();
+    //     const gainsOrLoss = Number(event.target.value)
+    //     setNewOrder({...newOrder, gainsOrLoss})
+    // }
 
-    const handleTargetMetChange = (event: any) => {
-        const isTargetMet = event.target.checked;
-        setNewOrder({...newOrder, isTargetMet})
-    }
+    // const handleTargetMetChange = (event: any) => {
+    //     const isTargetMet = event.target.checked;
+    //     setNewOrder({...newOrder, isTargetMet})
+    // }
 
     return (
         <tr id="newentry">
@@ -76,7 +66,6 @@ export function NewOrderTransaction({
                 <p>
                     <label htmlFor="txndate">Transaction Date</label>
                     <input id="txndate" type="date" onChange={handleDateChange} value={newOrder.dateTransaction}>
-
                     </input>
                 </p>
                 <p>
@@ -117,7 +106,7 @@ export function NewOrderTransaction({
                     >
                     </input>
                 </p>
-                <p>
+                {/* <p>
                     <label htmlFor="netamount">Net amount</label>
                     <input 
                         id="netamount" 
@@ -142,11 +131,11 @@ export function NewOrderTransaction({
                         value={newOrder.gainsOrLoss}
                     >
                     </input>
-                </p>
-                <p>
+                </p> */}
+                {/* <p>
                     <label htmlFor="targetmet">Target Met?</label>
                     <input id="targetmet" type="checkbox" onChange={handleTargetMetChange} value={`${newOrder.isTargetMet}`}/>
-                </p>
+                </p> */}
                 <p><button onClick={handleAddNewEntry}>Save</button></p>
             </form>
         </td>
