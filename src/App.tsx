@@ -6,6 +6,7 @@ import { Ledger } from "./pages/Ledger";
 import { About } from "./pages/About"; 
 import { NavBar } from "./components/NavBar/index";
 import UserProvider from "./context/UserContext";
+import Login from "./pages/Login";
 
 export default function App() {
     return (
@@ -16,8 +17,8 @@ export default function App() {
                 <Route path="/order" element={<Order />} />
                 <Route path="/ledger" element={<Ledger />} />
                 <Route path="/about" element={<About />} />
+                <Route path="/login" element={<Login />} />
             </Routes>
         </UserProvider>
-
     )
 }

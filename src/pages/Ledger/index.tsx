@@ -4,6 +4,7 @@ import "./ledger.css";
 import { NewOrderTransaction } from "../../components/OrderTransaction/newOrderTransaction";
 import { INewOrderTransaction, IOrderTransaction } from "../../interfaces/orders";
 import axios from "axios";
+import { getWithExpiry } from "../../util/localstorage";
 
 export function Ledger() {
     const defaultNewOrder = {
@@ -14,6 +15,7 @@ export function Ledger() {
         shares: 0,
         cost: 0,
     };
+    const accessToken = getWithExpiry('accesstoken');
 
     const [orders, setOrders] = useState<IOrderTransaction[]>([]);
     const [newOrder, setNewOrder] = useState<INewOrderTransaction>(defaultNewOrder);
@@ -22,10 +24,23 @@ export function Ledger() {
     const fetchOrders = async () => {
         const apiUrl = `${process.env.LOCAL_STOCK_KING_API}/orders`;
         
-        const response = await axios.get(apiUrl);
-        const { data } = response;
-        setOrders(data.orders)
-        console.log("response", response);
+        try {
+            const response = await axios.get(apiUrl, {
+                headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${accessToken}`
+                }
+            });
+            const { data } = response;
+            setOrders(data.orders)
+            setMessage("Successfully retrieved orders!");
+            console.log("response", response);
+        } catch(error) {
+            const errorDetails = error as Error;
+            setMessage(`Failed to get all orders... [${errorDetails.message}]`)
+        }
+
     }
 
     // Watches any changes of the newOrder
@@ -46,6 +61,7 @@ export function Ledger() {
                 headers: {
                     Accept: 'application/json',
                     'Content-Type': 'application/json',
+                    Authorization: `Bearer ${accessToken}`
                 }
             })
             setMessage("Successfully created a new order!");

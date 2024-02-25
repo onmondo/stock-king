@@ -1,6 +1,5 @@
 section#ledger {
     display: grid;
-    
 }
 
 section#ledger table.ordertxn {
@@ -35,6 +34,8 @@ section#ledger tr#newentry > td > form input, select {
     padding: 0.4rem 0.2rem;
     border-radius: 0.6rem;
     border-width: 0.1rem;
+    border-color: var(--hl-font-color);
+    color: var(--hl-font-color);
 }
 
 section#ledger tr#newentry > td > form input.amount {

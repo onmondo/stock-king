@@ -10,6 +10,7 @@ export function NavBar() {
                 <li><NavLink to="/order">Order</NavLink></li>
                 <li><NavLink to="/ledger">Ledger</NavLink></li>
                 <li><NavLink to="/about">About</NavLink></li>
+                <li><NavLink to="/login">Login</NavLink></li>
                 <li><input type="search"></input></li>
             </ul>
         </nav>
