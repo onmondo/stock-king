@@ -7,6 +7,10 @@
     /* --contact-bg-color: rgb(29, 27, 27); */
 }
 
+* {
+    box-sizing: border-box;
+}
+
 body {
     font-size: 16px;
     /* font-family: Verdana, Geneva, Tahoma, sans-serif; */

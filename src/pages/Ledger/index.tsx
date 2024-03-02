@@ -8,7 +8,6 @@ import { getWithExpiry } from "../../util/localstorage";
 
 export function Ledger() {
     const defaultNewOrder = {
-        userUuid: 'cb968471-6c42-4e4f-aab6-2108488d55ae',
         transactionDate: '',
         type: 'BUY',
         ticker: '',
@@ -19,7 +18,8 @@ export function Ledger() {
 
     const [orders, setOrders] = useState<IOrderTransaction[]>([]);
     const [newOrder, setNewOrder] = useState<INewOrderTransaction>(defaultNewOrder);
-    const [message, setMessage] = useState("");
+    const [message, setMessage] = useState<string[]>([]);
+    const [addedNewOrder, setAddedNewOrder] = useState<boolean>(false);
 
     const fetchOrders = async () => {
         const apiUrl = `${process.env.LOCAL_STOCK_KING_API}/orders`;
@@ -34,11 +34,13 @@ export function Ledger() {
             });
             const { data } = response;
             setOrders(data.orders)
-            setMessage("Successfully retrieved orders!");
+            message.push("Successfully retrieved orders!");
+            setMessage(message);
             console.log("response", response);
         } catch(error) {
             const errorDetails = error as Error;
-            setMessage(`Failed to get all orders... [${errorDetails.message}]`)
+            message.push(`Failed to get all orders... [${errorDetails.message}]`);
+            setMessage(message);
         }
 
     }
@@ -48,6 +50,17 @@ export function Ledger() {
     // useEffect(() => {
     //     fetchOrders();
     // }, [newOrder]);
+
+    // const updateMessageStack = () => {
+    //     console.log(message);
+    //     if (message && message.length > 0) {
+    //         setMessage(message.slice())
+    //     }
+    // }
+
+    // useEffect(() => {
+    //     setInterval(updateMessageStack, 6000);
+    // });
 
     useEffect(() => {
         fetchOrders();
@@ -64,10 +77,15 @@ export function Ledger() {
                     Authorization: `Bearer ${accessToken}`
                 }
             })
-            setMessage("Successfully created a new order!");
+            message.push("Successfully created a new order!")
+            setMessage(message);
+            setAddedNewOrder(!addedNewOrder);
         } catch (error) {
             const errorDetails = error as Error;
-            setMessage(`Create order failed... [${errorDetails.message}]`)
+            message.push(`Create order failed... [${errorDetails.message}]`)
+            setMessage(message);
+        } finally {
+            setNewOrder(defaultNewOrder);
         }
 
     }
@@ -75,15 +93,20 @@ export function Ledger() {
     const handleAddNewEntry = async (event: any) => {
         event.preventDefault();
         await postNewOrder();
-        await fetchOrders();
-        setNewOrder(defaultNewOrder);
+        // await fetchOrders();
     }
 
     return (
         <section id="ledger">
             <header>
                 <h1>Ledger</h1>
-                { (message) ? <p>{message}</p> : <></> }
+                { 
+                    (message) 
+                    ? 
+                        message && message.map((msg, index) => <p key={index}>{msg}</p>)
+                    : 
+                    <></> 
+                }
             </header>
 
             <table className="ordertxn">

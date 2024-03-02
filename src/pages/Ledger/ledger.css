@@ -43,6 +43,51 @@ section#ledger tr#newentry > td > form input.amount {
     width: 5rem;
 }
 
-section#ledger tr#newentry > td > form input#targetmet {
-    height: 1.4rem;
+section#ledger tr#newentry > td > form p.customChckBox {
+    display: flex;
+    align-items: center;
 }
+
+section#ledger tr#newentry > td > form p.customChckBox label {
+    display: flex;
+    cursor: pointer;
+}
+
+section#ledger tr#newentry > td > form p.customChckBox input[type="checkbox"] {
+    height: 1.4rem;
+    cursor: pointer;
+    position: absolute;
+    opacity: 0;
+}
+
+section#ledger tr#newentry > td > form p.customChckBox label::before {
+    content: "";
+    width: 1rem;
+    height: 1rem;
+    border-radius: 0.2rem;
+    border-width: 0.1rem;
+    border-style: solid;
+    border-color: var(--hl-font-color);
+    margin-right: 0.2rem;
+}
+
+section#ledger tr#newentry > td > form p.customChckBox label:hover::before,
+section#ledger tr#newentry > td > form p.customChckBox input[type="checkbox"]:hover + label::before {
+    background-color: var(--hl-font-color);
+}
+
+section#ledger tr#newentry > td > form p.customChckBox input[type="checkbox"]:focus + label::before {
+    box-shadow: 0 0 0.1rem black;
+}
+
+section#ledger tr#newentry > td > form p.customChckBox input[type="checkbox"]:checked + label::before {
+    content: "\002714";
+    background-color: var(--hl-font-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 0.8rem;
+}
+
+

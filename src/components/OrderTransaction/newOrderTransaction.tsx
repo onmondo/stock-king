@@ -1,4 +1,5 @@
 import React from "react";
+import CheckBox from "../CheckBox";
 // import { INewOrderTransaction } from "../../interfaces/orders";
 
 export function NewOrderTransaction({ 
@@ -54,10 +55,11 @@ export function NewOrderTransaction({
     //     setNewOrder({...newOrder, gainsOrLoss})
     // }
 
-    // const handleTargetMetChange = (event: any) => {
-    //     const isTargetMet = event.target.checked;
-    //     setNewOrder({...newOrder, isTargetMet})
-    // }
+    const handleTargetMetChange = (event: any) => {
+        const isTargetMet = event.target.checked;
+        console.log("isTargetMet", isTargetMet);
+        setNewOrder({...newOrder, isTargetMet});
+    }
 
     return (
         <tr id="newentry">
@@ -132,10 +134,7 @@ export function NewOrderTransaction({
                     >
                     </input>
                 </p> */}
-                {/* <p>
-                    <label htmlFor="targetmet">Target Met?</label>
-                    <input id="targetmet" type="checkbox" onChange={handleTargetMetChange} value={`${newOrder.isTargetMet}`}/>
-                </p> */}
+                <CheckBox labelText="Target Met?" checkBoxHandler={handleTargetMetChange} value={newOrder.isTargetMet}/>
                 <p><button onClick={handleAddNewEntry}>Save</button></p>
             </form>
         </td>

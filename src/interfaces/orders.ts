@@ -15,7 +15,6 @@ export interface IOrderTransaction {
 
 // for new entry
 export interface INewOrderTransaction {
-    userUuid: string;
     transactionDate: string;
     type: string;
     ticker: string;

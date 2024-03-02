@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./login.css"
+import "../../styles/login.scss";
 import axios from "axios";
 import { LoginCredentials } from "../../interfaces/users";
 import { getWithExpiry, setWithExpiry } from "../../util/localstorage";

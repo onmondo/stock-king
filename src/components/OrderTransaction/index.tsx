@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "./rowtransaction.scss";
 import "./rowtransaction.css";
 import { OrderStatus } from "./orderStatus"
 import { IOrderTransaction } from "../../interfaces/orders";
